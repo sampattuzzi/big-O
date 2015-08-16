@@ -1,3 +1,4 @@
+use "utils.sml";
 (* Maths analysis functions *)
 fun sum xs = foldl (op+) 0.0 xs;
 
