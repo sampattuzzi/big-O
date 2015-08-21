@@ -42,7 +42,7 @@ in
 
   thread_id := Int.+ (!thread_id,1);
 
-  PolyML.DebuggerInterface.setOnEntry (thread, SOME call);
+  PolyML.DebuggerInterface.setOnEntry (SOME call);
 
   lock startMutex;
   start := true;
