@@ -63,3 +63,7 @@ let
 in
   r xs []
 end;
+
+fun startup_cube 0 = ()
+  | startup_cube n = if n < 20 then (cube_fun n) else (lin_fun (n-20));
+

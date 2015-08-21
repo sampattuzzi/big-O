@@ -12,7 +12,7 @@ type complexityClass = {
  class_inv: RealMatrix.matrix -> RealMatrix.matrix
  };
 
-fun testComplexityClass timeout (gen: int -> 'b) (f: 'b -> 'd) (compClass:
+fun testComplexityClass startup_discard timeout (gen: int -> 'b) (f: 'b -> 'd) (compClass:
   complexityClass) = 
   let
     open Time
@@ -48,6 +48,8 @@ fun testComplexityClass timeout (gen: int -> 'b) (f: 'b -> 'd) (compClass:
       end
 
     val (ys, xs) = run_to_largest 1
+    val l = floor (startup_discard * real (length ys))
+    val (ys, xs) = (List.drop (ys, l), List.drop (xs, l))  
     val x = RealMatrix.trans(RealMatrix.fromList [(reals xs)])
     val y = RealMatrix.trans(RealMatrix.fromList [(reals ys)])
     val X = class x
@@ -145,9 +147,9 @@ val known_classes: complexityClass list = [
  }
  ]
 
-fun getClass timeout gen f =
+fun getClassWithoutStartup startup_discard timeout gen f =
   let
-    val leastSqrResult = map (testComplexityClass timeout gen f) known_classes
+    val leastSqrResult = map (testComplexityClass startup_discard timeout gen f) known_classes
     val class_names = map (#name) known_classes
     val names_results = zip class_names leastSqrResult
     fun compare x y =
@@ -162,3 +164,6 @@ fun getClass timeout gen f =
   in
     max_name
   end
+
+fun getClass timeout gen f = getClassWithoutStartup 0.0 timeout gen f;
+
