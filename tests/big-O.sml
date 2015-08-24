@@ -20,5 +20,5 @@ val less_exp_class_test = ((getClass timeout id less_exp_fun) = "n ^ 3");
 (* Tricky case as starts cubic then turns linear. Get the right result by
 * discarding startup effects.*)
 val startup_cube_test = ((getClass timeout id startup_cube) <> "n");
-val startup_cube_dropping_test = ((getClassWithoutStartup 0.5 timeout id
+val startup_cube_dropping_test = ((getClassWithoutStartup 51 timeout id
   startup_cube) = "n");
